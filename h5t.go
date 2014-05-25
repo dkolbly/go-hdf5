@@ -171,6 +171,11 @@ func (t *Datatype) Size() uint {
 	return uint(C.H5Tget_size(t.id))
 }
 
+// Class returns the datatype class identifier of the Datatype.
+func (t *Datatype) Class() TypeClass {
+	return TypeClass(C.H5Tget_class(t.id))
+}
+
 // SetSize sets the total size of a Datatype.
 func (t *Datatype) SetSize(sz uint) error {
 	err := C.H5Tset_size(t.id, C.size_t(sz))

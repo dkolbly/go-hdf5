@@ -151,3 +151,16 @@ func (s *Dataset) CreateAttributeWith(name string, dtype *Datatype, dspace *Data
 func (s *Dataset) OpenAttribute(name string) (*Attribute, error) {
 	return openAttribute(s.id, name)
 }
+
+// Returns an identifier for a copy of the datatype for a dataset.
+// hid_t H5Dget_type(hid_t dataset_id )
+
+func (s *Dataset) Type() (*Datatype, error) {
+	hid := C.H5Dget_type(s.id)
+	err := h5err(C.herr_t(int(hid)))
+	if err != nil {
+		return nil, err
+	}
+	dt := NewDatatype(hid, nil)
+	return dt, err
+}
